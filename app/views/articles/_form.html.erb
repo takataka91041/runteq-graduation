@@ -1,0 +1,52 @@
+<%= form_with model: article do |f| %>
+  <% if article.errors.any? %>
+    <div>
+      <h2><%= article.errors.count %>件のエラーがあります</h2>
+      <ul>
+        <% article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :url, "記事URL" %><br>
+    <%= f.text_field :url %>
+  </div>
+
+  <div>
+    <%= f.label :learning_goal, "学びたいこと" %><br>
+    <%= f.text_area :learning_goal %>
+  </div>
+
+  <div>
+    <%= f.label :status, "学習ステータス" %><br>
+    <%= f.select :status, Article.statuses.keys.map { |k| [k, k] }, selected: (article.status || "unread") %>
+  </div>
+
+  <div>
+    <%= f.label :priority, "優先度" %><br>
+    <%= f.select :priority, Article.priorities.keys.map { |k| [k, k] }, selected: (article.priority || "medium") %>
+  </div>
+
+  <div>
+    <%= f.label :estimated_reading_minutes, "読了予想（分）" %><br>
+    <%= f.number_field :estimated_reading_minutes %>
+  </div>
+
+  <div>
+    <%= f.label :output_memo, "学習メモ" %><br>
+    <%= f.text_area :output_memo %>
+  </div>
+
+  <div>
+    <%= f.label :implemented, "実装完了" %>
+    <%= f.check_box :implemented %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+    <%= link_to "戻る", articles_path %>
+  </div>
+<% end %>

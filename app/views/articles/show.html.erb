@@ -1,0 +1,26 @@
+<h1>記事詳細</h1>
+
+<p><strong>URL:</strong> <%= link_to @article.url, @article.url, target: "_blank", rel: "noopener" %></p>
+<p><strong>学びたいこと:</strong> <%= @article.learning_goal %></p>
+<p><strong>ステータス:</strong> <%= @article.status %></p>
+<p><strong>優先度:</strong> <%= @article.priority %></p>
+<p><strong>読了予想:</strong> <%= @article.estimated_reading_minutes %> 分</p>
+<p><strong>学習メモ:</strong><br><%= simple_format(@article.output_memo) %></p>
+<p><strong>実装完了:</strong> <%= @article.implemented ? "はい" : "いいえ" %></p>
+
+<hr>
+
+<p>
+  <%= link_to "編集", edit_article_path(@article) %> |
+  <%= link_to "削除", @article, data: { turbo_method: :delete, turbo_confirm: "削除しますか？" } %> |
+  <%= link_to "一覧へ戻る", articles_path %>
+</p>
+  
+<p><strong>OGPタイトル:</strong> <%= @article.og_title.presence || "（取得できませんでした）" %></p>
+
+<% if @article.og_image_url.present? %>
+  <p>
+    <%= image_tag @article.og_image_url, alt: (@article.og_title.presence || "OGP画像"), style: "max-width: 320px;" %>
+  </p>
+<% end %>
+

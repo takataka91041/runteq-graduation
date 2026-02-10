@@ -1,0 +1,29 @@
+<h1>記事一覧</h1>
+
+<p><%= link_to "記事を登録する", new_article_path %></p>
+
+<% if @articles.any? %>
+  <ul>
+    <% @articles.each do |article| %>
+      <li style="margin-bottom: 16px;">
+        <%# OGP画像があればサムネ表示 %>
+        <% if article.og_image_url.present? %>
+          <div>
+            <%= image_tag article.og_image_url, width: 200, alt: (article.og_title.presence || "og image") %>
+          </div>
+        <% end %>
+
+        <%# タイトル（なければURL）で詳細へ %>
+        <div>
+          <%= link_to(article.og_title.presence || article.url, article_path(article)) %>
+        </div>
+
+        <div>
+          （<%= article.status %> / <%= article.priority %>）
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>まだ記事がありません。まずは登録してみましょう。</p>
+<% end %>
